@@ -1,0 +1,1294 @@
+projectName: HARMONY2OKW
+description: E2E Test for Harmony
+sut: null
+features:
+  - name: OpenURL
+    order: 0
+    description: ''
+    documentation: ''
+    categories: >-
+      #URL(I): CheckboxSite
+      ("http://test.openkeyword.de/InputCheckbox/InputTypeCheckbox_HT.htm");
+               DisableCheckboxSite;
+               InputTypeText ("http://test.openkeyword.de/InputText/InputTypeText_HT.htm");
+               DIV_ContenteEditable("http://test.openkeyword.de/contenteditable/ContentEditable_DIV_HT.htm");
+               P_ContenteEditable("http://test.openkeyword.de/contenteditable/ContentEditable_P_HT.htm");
+               TextArea("http://test.openkeyword.de/Textarea/textarea_HT.htm");
+    constraints: |-
+      Site:
+      WHEN #URL IS EACH
+    useCases: ''
+    tests:
+      - name: T1 Site [CheckboxSite]
+      - name: T2 Site [DisableCheckboxSite]
+      - name: T3 Site [InputTypeText]
+      - name: T4 Site [DIV_ContenteEditable]
+      - name: T5 Site [P_ContenteEditable]
+      - name: T6 Site [TextArea]
+    attachments: []
+  - name: Base Funktions
+    order: 1
+    description: ''
+    documentation: ''
+    categories: ''
+    constraints: ''
+    useCases: ''
+    tests: []
+    attachments: []
+    format: h3
+  - name: Calculator
+    order: 2
+    description: ''
+    documentation: |-
+      <p>#Btn3</p>
+      <p><br></p>
+      <p>#input</p>
+    categories: |-
+      Btn1 (A): #pressed
+      Btn2 (A): #pressed
+      Btn3 (A): #pressed
+
+      input (O): 2; 3
+    constraints: |
+
+      1. Summand:
+      WHEN Btn1 IS #pressed
+
+
+      2. Summand: 
+      WHEN Btn2 IS #pressed 
+
+      Summe:
+      THEN input IS 3
+    useCases: |-
+      addition
+          1. Summand...
+          2. Summand => Summe
+    tests:
+      - name: T1 Summe
+    attachments: []
+  - name: Harmony GUI-Type-Test
+    order: 3
+    description: ''
+    documentation: ''
+    categories: ''
+    constraints: ''
+    useCases: ''
+    tests: []
+    attachments: []
+    format: h2
+  - name: HTML Input Type
+    order: 4
+    description: ''
+    documentation: ''
+    categories: ''
+    constraints: ''
+    useCases: ''
+    tests: []
+    attachments: []
+    format: h3
+  - name: InputTypeCheckbox
+    order: 5
+    description: ''
+    documentation: |-
+      <p>http://test.openkeyword.de/InputText/InputTypeText.htmAttributs</p>
+      <ul>
+        <li>#caption</li>
+        <li>#placeholder&nbsp;</li>
+        <li>#tooltip</li>
+        <li>#label</li>
+      </ul>
+      <p>Behavior</p>
+      <ul>
+        <li>#focused, #non-focused</li>
+        <li>#present, #non-present</li>
+        <li>#active, #non-active</li>
+        <li>#like</li>
+        <li>#match</li>
+      </ul>
+      <p>Actions</p>
+      <ul>
+        <li>#pressed</li>
+        <li>#selected</li>
+        <li>#typed<br>
+      <br>
+      </li>
+      </ul>
+    categories: |-
+      object_1 (IO): 
+              Choice Empty ("");
+              Choice ("Object 1");
+              #label Label ("Label Object 1");
+              #caption Caption ("Label Object 1");
+              #tooltip Tooltip ("attribute title object_1");
+              #undefined-placeholder;
+              #focused; #non-focused;
+              #present;
+              #active; #non-active; 
+              #pressed; #selected Zozo;
+              #typed " ";
+              // #maxlength
+              // #defined-maxlength;
+              #undefined-maxlength;
+              // #minlength
+              // #defined-minlength;
+              #undefined-minlength;
+              #checked
+
+      object_2 (IO): 
+              Choice Empty ("");
+              Choice ("Object 2");
+              #label Label ("Label Object 2");
+              #caption Caption ("Object 2 ");
+              #tooltip Tooltip ("attribute title");
+              #placeholder Placeholder ("attribute placeholder");
+              #focused; #non-focused;
+              #present;
+              #active; #non-active;
+              #pressed;
+              #unchecked
+
+
+      object_disabled(IO): #non-active;
+                    #caption Disabled;
+                    #label "This is a disabled checkbox";
+
+      object_notexist (O):
+              #non-present
+    constraints: |-
+      StartSite_TypeInputCB:
+      WHEN OpenURL IS Site [CheckboxSite]
+
+      TypeInputCB:
+      WHEN object_1 IS Choice
+
+      TestTypeInputCB:
+      THEN object_1 IS Choice 
+
+      TestCBCaption:
+      THEN object_1 IS #caption Caption 
+
+      TestCB_Undefined-Placeholder:
+      THEN object_1 IS #undefined-placeholder
+
+      TestCB_Undefined-Minlength:
+      THEN object_1 IS #undefined-minlength
+
+      TestCB_Undefined-Maxlength:
+      THEN object_1 IS #undefined-maxlength
+
+      TestCBTooltip:
+      THEN object_1 IS #tooltip Tooltip
+
+      TestCBLabel:
+      THEN object_1 IS #label Label
+
+      TestCBFocused:
+      WHEN object_1 IS #pressed 
+      THEN object_1 IS #checked 
+      THEN object_1 HAS #focused
+      AND object_2 IS #unchecked 
+
+      TestCBNonFocusd:
+      WHEN object_1 IS #pressed
+      THEN object_2 IS #non-focused
+
+      TestCBPresent:
+      THEN object_1 IS #present
+
+      TestCBNonPresent:
+      THEN object_notexist IS #non-present
+
+      TestCBActive:
+      THEN object_1 IS #active
+
+      TestCBNonActive:
+      THEN object_disabled IS #non-active 
+
+      TestCBPressed:
+      WHEN object_1 IS #pressed
+      THEN object_1 IS #focused
+      WHEN object_2 IS #pressed
+      THEN object_2 IS #focused
+
+
+      TestCBSelected:
+      WHEN object_1 IS #selected Zozo
+
+      TestCBTyped:
+      WHEN object_1 IS #typed " "
+    useCases: |-
+      StartSite_TypeInputCB
+          TypeInputCB => TestTypeInputCB
+
+          TestCBCaption
+          TestCB_Undefined-Placeholder
+          TestCBTooltip
+          TestCBLabel
+
+          TestCB_Undefined-Minlength
+          TestCB_Undefined-Maxlength
+
+          TestCBFocused
+          TestCBNonFocusd
+
+          TestCBPresent
+          TestCBNonPresent
+          TestCBActive
+          TestCBNonActive
+
+          TestCBPressed => TestTypeInputCB
+          TestCBSelected => TestTypeInputCB
+          TestCBTyped => TestTypeInputCB
+    tests:
+      - name: T1 TestTypeInputCB
+      - name: T2 TestCBCaption
+      - name: T3 TestCB_Undefined-Placeholder
+      - name: T4 TestCBTooltip
+      - name: T5 TestCBLabel
+      - name: T6 TestCB_Undefined-Minlength
+      - name: T7 TestCB_Undefined-Maxlength
+      - name: T8 TestCBFocused
+      - name: T9 TestCBNonFocusd
+      - name: T10 TestCBPresent
+      - name: T11 TestCBNonPresent
+      - name: T12 TestCBActive
+      - name: T13 TestCBNonActive
+      - name: T14 TestTypeInputCB
+      - name: T15 TestTypeInputCB
+      - name: T16 TestTypeInputCB
+    attachments: []
+  - name: InputTypeButton
+    order: 6
+    description: ''
+    documentation: |-
+      <p>http://test.openkeyword.de/InputText/InputTypeText.htm</p>
+      <h1>Attributs</h1>
+      <ul>
+        <li>#caption</li>
+        <li>#placeholder&nbsp;</li>
+        <li>#tooltip</li>
+        <li>#label</li>
+      </ul>
+      <h1>Behavior</h1>
+      <ul>
+        <li>#focused, #non-focused</li>
+        <li>#present, #non-present</li>
+        <li>#active, #non-active</li>
+        <li>#like</li>
+        <li>#match</li>
+      </ul>
+      <h1>Actions</h1>
+      <ul>
+        <li>#pressed</li>
+        <li>#selected</li>
+        <li>#typed</li>
+      </ul>
+    categories: |-
+      object_1 (IO): 
+              Choice Empty ("");
+              Choice ("Object 1"); Choice 2;
+              #label Label ("Label Object 1");
+              #caption Caption ("Label Object 1");
+              #tooltip Tooltip ("attribute title");
+              #placeholder Placeholder ("attribute placeholder");
+      object_2 (IO): 
+              Choice Empty ("");
+              Choice ("Object 1"); Choice 2;
+              #label Label ("Label Object 1");
+              #caption Caption ("Object 1");
+              #tooltip Tooltip ("attribute title");
+              #placeholder Placeholder ("attribute placeholder");
+    constraints: |-
+      StartSite_TypeInput:
+      WHEN OpenURL IS Site [InputTypeText]
+
+      Type_TypeInput:
+      WHEN object_1 IS Choice 2   
+
+      Test_TypeInput:
+      THEN object_1 IS Choice 2   
+
+      Test_TypeInput_Label:
+      THEN object_1 IS #label Label  
+
+      Test_TypeInput_Caption:
+      THEN object_1 HAS #caption Caption 
+
+      Test_TypeInput_Placeholder:
+      THEN object_1 HAS #placeholder Placeholder
+
+      Test_TypeInput_Tooltip:
+      THEN object_1 HAS #tooltip Tooltip
+    useCases: |-
+      StartSite
+          // "Enter" Test
+          // TypeInput [Zoltan] => TestTypeInput [Zoltan]
+
+          TestInpuTypeButtonCaption
+          TestTypeButtonPlaceholder
+          TestTypeButtonTooltip
+          TestTypeButtonLabel
+
+          TestTypeButtonFocused
+          TestTypeButtonNonFocusd
+
+          TestTypeButtonPresent
+          TestTypeButtonNonPresent
+          TestTypeButtonActive
+          TestTypeButtonNonActive
+
+          TestTypeButtonPressed
+          TestTypeButtonSelected
+          TestTypeButtonTyped
+    tests:
+      - name: T1 TestInpuTypeButtonCaption
+      - name: T2 TestTypeButtonPlaceholder
+      - name: T3 TestTypeButtonTooltip
+      - name: T4 TestTypeButtonLabel
+      - name: T5 TestTypeButtonFocused
+      - name: T6 TestTypeButtonNonFocusd
+      - name: T7 TestTypeButtonPresent
+      - name: T8 TestTypeButtonNonPresent
+      - name: T9 TestTypeButtonActive
+      - name: T10 TestTypeButtonNonActive
+      - name: T11 TestTypeButtonPressed
+      - name: T12 TestTypeButtonSelected
+      - name: T13 TestTypeButtonTyped
+    attachments: []
+  - name: InputTypeText
+    order: 7
+    description: ''
+    documentation: |-
+      <p>http://test.openkeyword.de/InputText/InputTypeText.htm</p>
+      <p>Attributs</p>
+      <ul>
+        <li>#caption</li>
+        <li>#placeholder&nbsp;</li>
+        <li>#tooltip</li>
+        <li>#label</li>
+      </ul>
+      <p>behavior</p>
+      <ul>
+        <li>#focused, #non-focused</li>
+        <li>#present, #non-present</li>
+        <li>#active, #non-active</li>
+      </ul>
+      <p><br></p>
+      <ul>
+        <li>#like</li>
+        <li>#match</li>
+      </ul>
+      <p>Actions</p>
+      <ul>
+        <li>#pressed</li>
+        <li>#selected</li>
+        <li>#typed</li>
+      </ul>
+      <p><br></p>
+    categories: |-
+      object_1 (IO): 
+              Choice ("Object 1"); Choice 2;
+
+              #focused;
+              #non-focused;
+       
+              Label (#label "Label Object 1");
+              #label "Label Object 1";
+              #defined-label;
+
+              Caption (#caption "Object 1");
+              #caption "Object 1";
+
+              #cleared;
+
+              Tooltip (#tooltip "attribute title object_1");
+              #tooltip "attribute title object_1";
+              #defined-tooltip;
+
+              Placeholder (#placeholder "attribute placeholder object_1");
+              #placeholder "attribute placeholder object_1";
+              #defined-placeholder;
+
+              #maxlength 30;
+              #defined-maxlength;
+              
+              #minlength 0;
+              #defined-minlength;
+
+              #present;
+
+      object_2 (IO):
+              #cleared;
+              #focused;
+              #non-focused;
+              #undefined-maxlength;
+              #undefined-minlength;
+
+      object_NotExists (IO):
+              #focused;
+              #non-present;
+    constraints: |-
+      StartSite_TypeInput:
+      WHEN OpenURL IS Site [InputTypeText]
+
+      SetFocus_Object_1:
+      WHEN object_1 IS #focused
+
+      SetFocus_Object_2:
+      WHEN object_2 IS #focused
+
+      Test_InputTypeText:
+      THEN object_1 IS Choice
+
+      Test_InputTypeText_Label_Abstarkt:
+      THEN object_1 IS Label
+
+      Test_InputTypeText_Label:
+      THEN object_1 IS #label "Label Object 1" 
+
+      Test_TypeInputText_Caption:
+      THEN object_1 HAS #caption "Object 1"
+
+      Test_InputTypeText_Caption_Abstrakt:
+      THEN object_1 HAS Caption
+
+      Test_InputTypeText_Placeholder:
+      THEN object_1 HAS #placeholder "attribute placeholder object_1"
+
+      Test_InputTypeText_Placeholder_Abstarkt:
+      THEN object_1 HAS Placeholder
+
+      Test_InputTypeText_DefinedPlaceholder:
+      THEN object_1 HAS #defined-placeholder
+
+
+      Test_InputTypeText_Tooltip_Abstarkt:
+      THEN object_1 HAS Tooltip
+
+      Test_InputTypeText_Tooltip:
+      THEN object_1 IS #tooltip "attribute title object_1"
+
+      Test_InputTypeText_DefinedTooltip:
+      THEN object_1 HAS #defined-tooltip
+
+
+      Test_InputTypeText_Minlength:
+      THEN object_1 HAS #minlength 0
+
+      Test_InputTypeText_DefinedMinlength:
+      THEN object_1 HAS #defined-minlength
+
+      Test_InputTypeText_UndefinedMinlength:
+      THEN object_2 HAS #undefined-minlength
+
+
+      Test_InputTypeText_Maxlength:
+      THEN object_1 HAS #maxlength 30
+
+      Test_InputTypeText_DefinedMaxlength:
+      THEN object_1 HAS #defined-maxlength
+
+      Test_InputTypeText_UndefinedMaxlength:
+      THEN object_2 HAS #undefined-maxlength
+
+      Test_InputTypeText_Focused:
+      THEN object_1 IS #focused 
+
+      Test_InputTypeText_NonFocused:
+      THEN object_1 IS #non-focused 
+
+
+      TestTypeInputPresent:
+      THEN object_1 IS #present 
+
+      TestTypeInputNonPresent:
+      THEN object_NotExists IS #non-present
+
+
+      Test_InputTypeText_Clear:
+      WHEN object_1 IS #cleared 
+
+      Test_InputTypeText_Empty:
+      THEN object_1 IS #cleared 
+
+      Type_TypeInputText:
+      WHEN object_1 IS Choice 
+
+      Test_TypeInputText:
+      THEN object_1 IS Choice 
+    useCases: |+
+      StartSite_TypeInput
+          Type_TypeInputText => Test_TypeInputText
+
+          Test_InputTypeText_Clear => Test_InputTypeText_Empty
+
+          Test_InputTypeText_Placeholder
+          Test_InputTypeText_Placeholder_Abstarkt
+          Test_InputTypeText_DefinedPlaceholder
+
+          Test_InputTypeText_Tooltip
+          Test_InputTypeText_Tooltip_Abstarkt
+          Test_InputTypeText_DefinedTooltip
+          
+          Test_InputTypeText_Label
+          Test_InputTypeText_Label_Abstarkt
+
+          SetFocus_Object_1
+              Test_InputTypeText_Focused
+          SetFocus_Object_2
+              Test_InputTypeText_NonFocused
+
+          Test_InputTypeText_Minlength
+          Test_InputTypeText_DefinedMinlength
+          Test_InputTypeText_UndefinedMinlength
+
+          Test_InputTypeText_Maxlength
+          Test_InputTypeText_DefinedMaxlength
+          Test_InputTypeText_UndefinedMaxlength
+          
+          TestTypeInputPresent
+          TestTypeInputNonPresent
+
+          //TestTypeInputextActive
+          //TestTypeInputNonActive
+
+          //TestTypeInputPressed
+          //TestTypeInputSelected
+          //TestTypeInputTyped
+
+
+
+
+    tests:
+      - name: T1 Test_TypeInputText
+      - name: T2 Test_InputTypeText_Empty
+      - name: T3 Test_InputTypeText_Placeholder
+      - name: T4 Test_InputTypeText_Placeholder_Abstarkt
+      - name: T5 Test_InputTypeText_DefinedPlaceholder
+      - name: T6 Test_InputTypeText_Tooltip
+      - name: T7 Test_InputTypeText_Tooltip_Abstarkt
+      - name: T8 Test_InputTypeText_DefinedTooltip
+      - name: T9 Test_InputTypeText_Label
+      - name: T10 Test_InputTypeText_Label_Abstarkt
+      - name: T11 Test_InputTypeText_Focused
+      - name: T12 Test_InputTypeText_NonFocused
+      - name: T13 Test_InputTypeText_Minlength
+      - name: T14 Test_InputTypeText_DefinedMinlength
+      - name: T15 Test_InputTypeText_UndefinedMinlength
+      - name: T16 Test_InputTypeText_Maxlength
+      - name: T17 Test_InputTypeText_DefinedMaxlength
+      - name: T18 Test_InputTypeText_UndefinedMaxlength
+      - name: T19 TestTypeInputPresent
+      - name: T20 TestTypeInputNonPresent
+    attachments: []
+  - name: InputTypeRadioButton
+    order: 8
+    description: ''
+    documentation: ''
+    categories: ''
+    constraints: ''
+    useCases: ''
+    tests: []
+    attachments: []
+  - name: HTML Types
+    order: 9
+    description: ''
+    documentation: ''
+    categories: ''
+    constraints: ''
+    useCases: ''
+    tests: []
+    attachments: []
+    format: h3
+  - name: done
+    order: 10
+    description: ''
+    documentation: ''
+    categories: ''
+    constraints: ''
+    useCases: ''
+    tests: []
+    attachments: []
+    format: h3
+  - name: DIV ContentEditable
+    order: 11
+    description: ''
+    documentation: ''
+    categories: |-
+      object_1 (IO): 
+              Choice ("Object 1"); Choice 2;
+
+              #focused;
+              #non-focused;
+       
+              Label (#label "Label Object 1");
+              #label "Label Object 1";
+              #defined-label;
+
+              Caption (#caption "Object 1");
+              #caption "Object 1";
+
+              #cleared;
+
+              Tooltip (#tooltip "attribute title object_1");
+              #tooltip "attribute title object_1";
+              #defined-tooltip;
+
+              Placeholder (#placeholder "attribute placeholder object_1");
+              #placeholder "attribute placeholder object_1";
+              #defined-placeholder;
+
+              #maxlength 30;
+              #defined-maxlength;
+              
+              #minlength 0;
+              #defined-minlength;
+
+              #present;
+
+      object_2 (IO):
+              #cleared;
+              #focused;
+              #non-focused;
+              #undefined-maxlength;
+              #undefined-minlength;
+
+      object_NotExists (IO):
+              #focused;
+              #non-present;
+    constraints: |-
+      StartSite_DIV:
+      WHEN OpenURL IS Site [DIV_ContenteEditable]
+
+      SetFocus_DIV_Object_1:
+      WHEN object_1 IS #focused
+
+      SetFocus_DIV_Object_2:
+      WHEN object_2 IS #focused
+
+      Set_DIV:
+      THEN object_1 IS Choice
+
+      Test_DIV:
+      THEN object_1 IS Choice
+
+      Test_DIV_Label_Abstarkt:
+      THEN object_1 IS Label
+
+      Test_DIV_Label:
+      THEN object_1 IS #label "Label Object 1" 
+
+      Test_DIV_Caption:
+      THEN object_1 HAS #caption "Object 1"
+
+      Test_DIV_Caption_Abstrakt:
+      THEN object_1 HAS Caption
+
+      Test_DIV_Placeholder:
+      THEN object_1 HAS #placeholder "attribute placeholder object_1"
+
+      Test_DIV_Placeholder_Abstarkt:
+      THEN object_1 HAS Placeholder
+
+      Test_DIV_DefinedPlaceholder:
+      THEN object_1 HAS #defined-placeholder
+
+
+      Test_DIV_Tooltip_Abstarkt:
+      THEN object_1 HAS Tooltip
+
+      Test_DIV_Tooltip:
+      THEN object_1 IS #tooltip "attribute title object_1"
+
+      Test_DIV_DefinedTooltip:
+      THEN object_1 HAS #defined-tooltip
+
+
+      Test_DIV_Minlength:
+      THEN object_1 HAS #minlength 0
+
+      Test_DIV_DefinedMinlength:
+      THEN object_1 HAS #defined-minlength
+
+      Test_DIV_UndefinedMinlength:
+      THEN object_2 HAS #undefined-minlength
+
+
+      Test_DIV_Maxlength:
+      THEN object_1 HAS #maxlength 30
+
+      Test_DIV_DefinedMaxlength:
+      THEN object_1 HAS #defined-maxlength
+
+      Test_DIV_UndefinedMaxlength:
+      THEN object_2 HAS #undefined-maxlength
+
+      Test_DIV_Focused:
+      THEN object_1 IS #focused 
+
+      Test_DIV_NonFocused:
+      THEN object_1 IS #non-focused 
+
+
+      Test_DIV_Present:
+      THEN object_1 IS #present 
+
+      Test_DIV_NonPresent:
+      THEN object_NotExists IS #non-present
+
+
+      Set_DIV_Clear:
+      WHEN object_1 IS #cleared 
+
+      Test_DIV_Clear:
+      THEN object_1 IS #cleared 
+    useCases: |-
+      StartSite_DIV
+          Set_DIV => Test_DIV
+
+          Set_DIV_Clear => Test_DIV_Clear
+
+          Test_DIV_Placeholder
+          Test_DIV_Placeholder_Abstarkt
+          Test_DIV_DefinedPlaceholder
+
+          Test_DIV_Tooltip
+          Test_DIV_Tooltip_Abstarkt
+          Test_DIV_DefinedTooltip
+          
+          Test_DIV_Label
+          Test_DIV_Label_Abstarkt
+
+          SetFocus_DIV_Object_1
+              Test_DIV_Focused
+          SetFocus_DIV_Object_2
+              Test_DIV_NonFocused
+
+          Test_DIV_Minlength
+          Test_DIV_DefinedMinlength
+          Test_DIV_UndefinedMinlength
+
+          Test_DIV_Maxlength
+          Test_DIV_DefinedMaxlength
+          Test_DIV_UndefinedMaxlength
+          
+          Test_DIV_Present
+          Test_DIV_NonPresent
+
+          //TestTypeInputextActive
+          //TestTypeInputNonActive
+
+          //TestTypeInputPressed
+          //TestTypeInputSelected
+          //TestTypeInputTyped
+    tests:
+      - name: T1 Test_DIV
+      - name: T2 Test_DIV_Clear
+      - name: T3 Test_DIV_Placeholder
+      - name: T4 Test_DIV_Placeholder_Abstarkt
+      - name: T5 Test_DIV_DefinedPlaceholder
+      - name: T6 Test_DIV_Tooltip
+      - name: T7 Test_DIV_Tooltip_Abstarkt
+      - name: T8 Test_DIV_DefinedTooltip
+      - name: T9 Test_DIV_Label
+      - name: T10 Test_DIV_Label_Abstarkt
+      - name: T11 Test_DIV_Focused
+      - name: T12 Test_DIV_NonFocused
+      - name: T13 Test_DIV_Minlength
+      - name: T14 Test_DIV_DefinedMinlength
+      - name: T15 Test_DIV_UndefinedMinlength
+      - name: T16 Test_DIV_Maxlength
+      - name: T17 Test_DIV_DefinedMaxlength
+      - name: T18 Test_DIV_UndefinedMaxlength
+      - name: T19 Test_DIV_Present
+      - name: T20 Test_DIV_NonPresent
+    attachments: []
+  - name: P ContentEditable
+    order: 12
+    description: ''
+    documentation: ''
+    categories: |-
+      object_1 (IO): 
+              Choice ("Object 1"); Choice 2;
+
+              #focused;
+              #non-focused;
+       
+              Label (#label "Label Object 1");
+              #label "Label Object 1";
+              #defined-label;
+
+              Caption (#caption "Object 1");
+              #caption "Object 1";
+
+              #cleared;
+
+              Tooltip (#tooltip "attribute title object_1");
+              #tooltip "attribute title object_1";
+              #defined-tooltip;
+
+              Placeholder (#placeholder "attribute placeholder object_1");
+              #placeholder "attribute placeholder object_1";
+              #defined-placeholder;
+
+              #maxlength 30;
+              #defined-maxlength;
+              
+              #minlength 0;
+              #defined-minlength;
+
+              #present;
+
+      object_2 (IO):
+              #cleared;
+              #focused;
+              #non-focused;
+              #undefined-maxlength;
+              #undefined-minlength;
+
+      object_NotExists (IO):
+              #focused;
+              #non-present;
+    constraints: |-
+      StartSite_P:
+      WHEN OpenURL IS Site [P_ContenteEditable]
+
+      SetFocus_P_Object_1:
+      WHEN object_1 IS #focused
+
+      SetFocus_P_Object_2:
+      WHEN object_2 IS #focused
+
+      Set_P:
+      THEN object_1 IS Choice
+
+      Test_P:
+      THEN object_1 IS Choice
+
+      Test_P_Label_Abstarkt:
+      THEN object_1 IS Label 
+      Test_P_Label:
+      THEN object_1 IS #label "Label Object 1" 
+
+      Test_P_Caption:
+      THEN object_1 HAS #caption "Object 1"
+
+      Test_P_Caption_Abstrakt:
+      THEN object_1 HAS Caption
+
+      Test_P_Placeholder:
+      THEN object_1 HAS #placeholder "attribute placeholder object_1"
+
+      Test_P_Placeholder_Abstarkt:
+      THEN object_1 HAS Placeholder
+
+      Test_P_DefinedPlaceholder:
+      THEN object_1 HAS #defined-placeholder
+
+
+      Test_P_Tooltip_Abstarkt:
+      THEN object_1 HAS Tooltip
+
+      Test_P_Tooltip:
+      THEN object_1 IS #tooltip "attribute title object_1"
+
+      Test_P_DefinedTooltip:
+      THEN object_1 HAS #defined-tooltip
+
+
+      Test_P_Minlength:
+      THEN object_1 HAS #minlength 0
+
+      Test_P_DefinedMinlength:
+      THEN object_1 HAS #defined-minlength
+
+      Test_P_UndefinedMinlength:
+      THEN object_2 HAS #undefined-minlength
+
+
+      Test_P_Maxlength:
+      THEN object_1 HAS #maxlength 30
+
+      Test_P_DefinedMaxlength:
+      THEN object_1 HAS #defined-maxlength
+
+      Test_P_UndefinedMaxlength:
+      THEN object_2 HAS #undefined-maxlength
+
+      Test_P_Focused:
+      THEN object_1 IS #focused 
+
+      Test_P_NonFocused:
+      THEN object_1 IS #non-focused 
+
+
+      Test_P_Present:
+      THEN object_1 IS #present 
+
+      Test_P_NonPresent:
+      THEN object_NotExists IS #non-present
+
+
+      Set_P_Clear:
+      WHEN object_1 IS #cleared 
+
+      Test_P_Clear:
+      THEN object_1 IS #cleared 
+    useCases: |-
+      StartSite_P
+          Set_P => Test_P
+
+          Set_P_Clear => Test_P_Clear
+
+          Test_P_Placeholder
+          Test_P_Placeholder_Abstarkt
+          Test_P_DefinedPlaceholder
+
+          Test_P_Tooltip
+          Test_P_Tooltip_Abstarkt
+          Test_P_DefinedTooltip
+          
+          Test_P_Label
+          Test_P_Label_Abstarkt
+
+          SetFocus_P_Object_1
+              Test_P_Focused
+          SetFocus_P_Object_2
+              Test_P_NonFocused
+
+          Test_P_Minlength
+          Test_P_DefinedMinlength
+          Test_P_UndefinedMinlength
+
+          Test_P_Maxlength
+          Test_P_DefinedMaxlength
+          Test_P_UndefinedMaxlength
+          
+          Test_P_Present
+          Test_P_NonPresent
+
+          //TestTypeInputextActive
+          //TestTypeInputNonActive
+
+          //TestTypeInputPressed
+          //TestTypeInputSelected
+          //TestTypeInputTyped
+    tests:
+      - name: T1 Test_P
+      - name: T2 Test_P_Clear
+      - name: T3 Test_P_Placeholder
+      - name: T4 Test_P_Placeholder_Abstarkt
+      - name: T5 Test_P_DefinedPlaceholder
+      - name: T6 Test_P_Tooltip
+      - name: T7 Test_P_Tooltip_Abstarkt
+      - name: T8 Test_P_DefinedTooltip
+      - name: T9 Test_P_Label
+      - name: T10 Test_P_Label_Abstarkt
+      - name: T11 Test_P_Focused
+      - name: T12 Test_P_NonFocused
+      - name: T13 Test_P_Minlength
+      - name: T14 Test_P_DefinedMinlength
+      - name: T15 Test_P_UndefinedMinlength
+      - name: T16 Test_P_Maxlength
+      - name: T17 Test_P_DefinedMaxlength
+      - name: T18 Test_P_UndefinedMaxlength
+      - name: T19 Test_P_Present
+      - name: T20 Test_P_NonPresent
+    attachments: []
+  - name: TextArea
+    order: 13
+    description: ''
+    documentation: ''
+    categories: |-
+      object_1 (IO): 
+              Choice ("Object 1"); Choice 2;
+
+              #focused;
+              #non-focused;
+       
+              Label (#label "Label Object 1");
+              #label "Label Object 1";
+              #defined-label;
+
+              Caption (#caption "Object 1");
+              #caption "Object 1";
+
+              #cleared;
+
+              Tooltip (#tooltip "attribute title object_1");
+              #tooltip "attribute title object_1";
+              #defined-tooltip;
+
+              Placeholder (#placeholder "attribute placeholder object_1");
+              #placeholder "attribute placeholder object_1";
+              #defined-placeholder;
+
+              #maxlength 30;
+              #defined-maxlength;
+              
+              #minlength 0;
+              #defined-minlength;
+
+              #present;
+
+      object_2 (IO):
+              #cleared;
+              #focused;
+              #non-focused;
+              #undefined-maxlength;
+              #undefined-minlength;
+
+      object_NotExists (IO):
+              #focused;
+              #non-present;
+    constraints: |-
+      StartSite_TextArea:
+      WHEN OpenURL IS Site [TextArea]
+
+      SetFocus_TextArea_Object_1:
+      WHEN object_1 IS #focused
+
+      SetFocus_TextArea_Object_2:
+      WHEN object_2 IS #focused
+
+      Test_TextArea:
+      THEN object_1 IS Choice
+
+      Test_TextArea_Label_Abstarkt:
+      THEN object_1 IS Label
+
+      Test_TextArea_Label:
+      THEN object_1 IS #label "Label Object 1" 
+
+      Test_TextArea_Caption:
+      THEN object_1 HAS #caption "Object 1"
+
+      Test_TextArea_Caption_Abstrakt:
+      THEN object_1 HAS Caption
+
+      Test_TextArea_Placeholder:
+      THEN object_1 HAS #placeholder "attribute placeholder object_1"
+
+      Test_TextArea_Placeholder_Abstarkt:
+      THEN object_1 HAS Placeholder
+
+      Test_TextArea_DefinedPlaceholder:
+      THEN object_1 HAS #defined-placeholder
+
+
+      Test_TextArea_Tooltip_Abstarkt:
+      THEN object_1 HAS Tooltip
+
+      Test_TextArea_Tooltip:
+      THEN object_1 IS #tooltip "attribute title object_1"
+
+      Test_TextArea_DefinedTooltip:
+      THEN object_1 HAS #defined-tooltip
+
+
+      Test_TextArea_Minlength:
+      THEN object_1 HAS #minlength 0
+
+      Test_TextArea_DefinedMinlength:
+      THEN object_1 HAS #defined-minlength
+
+      Test_TextArea_UndefinedMinlength:
+      THEN object_2 HAS #undefined-minlength
+
+
+      Test_TextArea_Maxlength:
+      THEN object_1 HAS #maxlength 30
+
+      Test_TextArea_DefinedMaxlength:
+      THEN object_1 HAS #defined-maxlength
+
+      Test_TextArea_UndefinedMaxlength:
+      THEN object_2 HAS #undefined-maxlength
+
+      Test_TextArea_Focused:
+      THEN object_1 IS #focused 
+
+      Test_TextArea_NonFocused:
+      THEN object_1 IS #non-focused 
+
+
+      Test_TextArea_Present:
+      THEN object_1 IS #present 
+
+      Test_TextArea_NonPresent:
+      THEN object_NotExists IS #non-present
+
+
+      Set_TextArea_Clear:
+      WHEN object_1 IS #cleared 
+
+      Test_TextArea_Clear:
+      THEN object_1 IS #cleared 
+
+      Set_TextArea:
+      WHEN object_1 IS Choice 
+    useCases: |+
+      StartSite_TextArea
+          Set_TextArea => Test_TextArea
+
+          Set_TextArea_Clear => Test_TextArea_Clear
+
+          Test_TextArea_Placeholder
+          Test_TextArea_Placeholder_Abstarkt
+          Test_TextArea_DefinedPlaceholder
+
+          Test_TextArea_Tooltip
+          Test_TextArea_Tooltip_Abstarkt
+          Test_TextArea_DefinedTooltip
+          
+          Test_TextArea_Label
+          Test_TextArea_Label_Abstarkt
+
+          SetFocus_TextArea_Object_1
+              Test_TextArea_Focused
+          SetFocus_TextArea_Object_2
+              Test_TextArea_NonFocused
+
+          Test_TextArea_Minlength
+          Test_InputTypeText_DefinedMinlength
+          Test_InputTypeText_UndefinedMinlength
+
+          Test_TextArea_Maxlength
+          Test_TextArea_DefinedMaxlength
+          Test_TextArea_UndefinedMaxlength
+          
+          Test_TextArea_Present
+          Test_TextArea_NonPresent
+
+          //TestTypeInputextActive
+          //TestTypeInputNonActive
+
+          //TestTypeInputPressed
+          //TestTypeInputSelected
+          //TestTypeInputTyped
+
+
+
+
+    tests:
+      - name: T1 Test_TextArea
+      - name: T2 Test_TextArea_Clear
+      - name: T3 Test_TextArea_Placeholder
+      - name: T4 Test_TextArea_Placeholder_Abstarkt
+      - name: T5 Test_TextArea_DefinedPlaceholder
+      - name: T6 Test_TextArea_Tooltip
+      - name: T7 Test_TextArea_Tooltip_Abstarkt
+      - name: T8 Test_TextArea_DefinedTooltip
+      - name: T9 Test_TextArea_Label
+      - name: T10 Test_TextArea_Label_Abstarkt
+      - name: T11 Test_TextArea_Focused
+      - name: T12 Test_TextArea_NonFocused
+      - name: T13 Test_TextArea_Minlength
+      - name: T14 Test_InputTypeText_DefinedMinlength
+      - name: T15 Test_InputTypeText_UndefinedMinlength
+      - name: T16 Test_TextArea_Maxlength
+      - name: T17 Test_TextArea_DefinedMaxlength
+      - name: T18 Test_TextArea_UndefinedMaxlength
+      - name: T19 Test_TextArea_Present
+      - name: T20 Test_TextArea_NonPresent
+    attachments: []
+  - name: under construction
+    order: 14
+    description: ''
+    documentation: ''
+    categories: ''
+    constraints: ''
+    useCases: ''
+    tests: []
+    attachments: []
+    format: h3
+  - name: Button
+    order: 15
+    description: ''
+    documentation: ''
+    categories: ''
+    constraints: ''
+    useCases: ''
+    tests: []
+    attachments: []
+  - name: Special characters
+    order: 16
+    description: ''
+    documentation: ''
+    categories: "object_1 (IO): \r\n        abcd;\r\n        #typed \"{movetostart}\";\r\n        #typed \"{selectall}\";\r\n        #typed \"{del}\";\r\n        #cleared;\r\n        #typed \"{shift+alt+b}Hi\";\r\n        bcd\r\n        \r\n\r\nobject_2 (IO):\r\n        #typed {shift+alt+b};  \r\n        #cleared;\r\n        #focused;\r\n        #non-focused;\r\n        #undefined-maxlength;\r\n        #undefined-minlength;\r\n\r\nobject_NotExists (IO):\r\n        #focused;\r\n        #non-present;\r\n        "
+    constraints: "\r\nCtrl Space:\r\nWHEN Site [InputTypeText] \r\nWHEN object_1 IS abcd \r\nWHEN object_1 IS #typed \"{movetostart}\" \r\nWHEN object_1 IS #typed \"{del}\" \r\nTHEN object_1 IS bcd \r\n//WHEN object_1 IS #typed \"{shift+alt+b}Hi\" \r\n\r\n\r\n"
+    useCases: Ctrl Space
+    tests:
+      - name: T1 Ctrl Space
+    attachments: []
+ruleset: |-
+  {
+    "version": 1,
+    "runner": "cypress",
+    "cypressOptions": {
+      "testIdAttribute": "data-harmony-id",
+      "testIdFormat": "original",
+      "filePreamble": "// this file is generated by Harmony",
+      "IS": {
+        "input,textarea": "%o.type(%s)",
+        "[contenteditable=true]": "%o.type(%s)"
+      },
+      "SHOULD_BE": {
+        "input": "expect(%e).to.have.value(%s)",
+        "*": "expect(%e).to.have.text(%s)"
+      }
+    },
+    "objects": {
+      "#URL": {
+        "WHEN": {
+          "*": "cy.visit(%s)"
+        }
+      },
+      "*": "cy.OBJ(%s)",
+      "css:*": "cy.get(%s)",
+      "id:*": "cy.get(%s)",
+      "class:*": "cy.get(%s)",
+      "contains:*": "cy.contains(%s)"
+     
+    },
+    "WHEN": {
+      "#cleared": "%o.focus().clear()",
+      "#focused": "%o.focus()",
+      "#pressed": "%o.click()",
+      "#scrollIntoView": "%o.scrollIntoView()",
+      "#screenshot": "%o.screenshot()",
+      "#selected *": "%o.select(%s)",
+      "#typed *": "%o.wait(2500).type(%s + '{enter}')",
+      "*": "%o.clear().IS(%s)"
+    },
+    "THEN": {
+      "#active": "%o.should('not.be.disabled')",
+      "#non-active": "%o.should('be.disabled')",
+      "#caption *": "%o.should('attr.text', %s)",
+      "#contain *": "%o.should('contain', %s)",
+      "#cleared": "%o.SHOULD_BE('')",
+      "#present": "%o.should('be.visible')",
+      "#eq *": "%o.should('eq', %s)",
+      "#focused": "%o.should('have.focus')",
+      "#non-focused": "%o.should('not.have.focus')",
+      "#non-present": "%o.should('not.exist')",
+      "#gt *": "%o.should('gt', %s)",
+      "#include *": "%o.should('include', %s)",
+      "#label *": "%o.SHOULD_BE(%s)",
+      "#maxlength *": "%o.invoke('attr', 'maxlength').should('eq', %s)",
+      "#defined-maxlength": "%o.should('have.attr', 'maxlength')",
+      "#undefined-maxlength": "%o.should('not.have.attr', 'maxlength')",
+      "#minlength *": "%o.invoke('attr', 'minlength').should('eq', %s)",
+      "#defined-minlength": "%o.should('have.attr', 'minlength')",
+      "#undefined-minlength": "%o.should('not.have.attr', 'minlength')",
+      "#placeholder *": "%o.invoke('attr', 'placeholder').should('eq', %s)",
+      "#undefined-placeholder": "%o.should('not.have.attr', 'placeholder')",
+      "#defined-placeholder": "%o.should('have.attr', 'placeholder')",
+      "#tooltip *": "%o.invoke('attr', 'title').should('eq', %s)",
+      "#undefined-tooltip": "%o.should('not.have.attr', 'title')",
+      "#defined-tooltip": "%o.should('have.attr', 'title')",
+      "#value *": "%o.should('have.value', %s)",
+      "*": "%o.SHOULD_BE(%s)"
+    }
+    }
