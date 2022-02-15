@@ -4,14 +4,14 @@
 describe("InputTypeText", () => {
   it("T1 Test_TypeInputText", () => {
     cy.visit("http://test.openkeyword.de/InputText/InputTypeText_HT.htm")
-    cy.OBJ("object_1").clear().IS("Object 1")
+    cy.OBJ("object_1").IS("Object 1")
     cy.OBJ("object_1").SHOULD_BE("Object 1")
   })
 
   it("T2 Test_InputTypeText_Empty", () => {
     cy.visit("http://test.openkeyword.de/InputText/InputTypeText_HT.htm")
-    cy.OBJ("object_1").focus().clear()
-    cy.OBJ("object_1").SHOULD_BE('')
+    cy.OBJ("object_1").clear()
+    cy.OBJ("object_1").should('attr.text', '')
   })
 
   it("T3 Test_InputTypeText_Placeholder", () => {
@@ -46,12 +46,12 @@ describe("InputTypeText", () => {
 
   it("T9 Test_InputTypeText_Label", () => {
     cy.visit("http://test.openkeyword.de/InputText/InputTypeText_HT.htm")
-    cy.OBJ("object_1").SHOULD_BE("Label Object 1")
+    cy.OBJ("object_1").SHOULD_BE_LABEL("Label Object 1")
   })
 
   it("T10 Test_InputTypeText_Label_Abstarkt", () => {
     cy.visit("http://test.openkeyword.de/InputText/InputTypeText_HT.htm")
-    cy.OBJ("object_1").SHOULD_BE("Label Object 1")
+    cy.OBJ("object_1").SHOULD_BE_LABEL("Label Object 1")
   })
 
   it("T11 Test_InputTypeText_Focused", () => {
@@ -98,7 +98,7 @@ describe("InputTypeText", () => {
 
   it("T19 TestTypeInputPresent", () => {
     cy.visit("http://test.openkeyword.de/InputText/InputTypeText_HT.htm")
-    cy.OBJ("object_1").should('be.visible')
+    cy.OBJ("object_1").should('exist')
   })
 
   it("T20 TestTypeInputNonPresent", () => {

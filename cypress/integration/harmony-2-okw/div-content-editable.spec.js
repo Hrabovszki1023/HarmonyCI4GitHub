@@ -10,8 +10,8 @@ describe("DIV ContentEditable", () => {
 
   it("T2 Test_DIV_Clear", () => {
     cy.visit("http://test.openkeyword.de/contenteditable/ContentEditable_DIV_HT.htm")
-    cy.OBJ("object_1").focus().clear()
-    cy.OBJ("object_1").SHOULD_BE('')
+    cy.OBJ("object_1").clear()
+    cy.OBJ("object_1").should('attr.text', '')
   })
 
   it("T3 Test_DIV_Placeholder", () => {
@@ -46,12 +46,12 @@ describe("DIV ContentEditable", () => {
 
   it("T9 Test_DIV_Label", () => {
     cy.visit("http://test.openkeyword.de/contenteditable/ContentEditable_DIV_HT.htm")
-    cy.OBJ("object_1").SHOULD_BE("Label Object 1")
+    cy.OBJ("object_1").SHOULD_BE_LABEL("Label Object 1")
   })
 
   it("T10 Test_DIV_Label_Abstarkt", () => {
     cy.visit("http://test.openkeyword.de/contenteditable/ContentEditable_DIV_HT.htm")
-    cy.OBJ("object_1").SHOULD_BE("Label Object 1")
+    cy.OBJ("object_1").SHOULD_BE_LABEL("Label Object 1")
   })
 
   it("T11 Test_DIV_Focused", () => {
@@ -98,7 +98,7 @@ describe("DIV ContentEditable", () => {
 
   it("T19 Test_DIV_Present", () => {
     cy.visit("http://test.openkeyword.de/contenteditable/ContentEditable_DIV_HT.htm")
-    cy.OBJ("object_1").should('be.visible')
+    cy.OBJ("object_1").should('exist')
   })
 
   it("T20 Test_DIV_NonPresent", () => {

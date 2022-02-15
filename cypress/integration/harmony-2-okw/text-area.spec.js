@@ -4,14 +4,14 @@
 describe("TextArea", () => {
   it("T1 Test_TextArea", () => {
     cy.visit("http://test.openkeyword.de/Textarea/textarea_HT.htm")
-    cy.OBJ("object_1").clear().IS("Textcontent object_1")
+    cy.OBJ("object_1").IS("Textcontent object_1")
     cy.OBJ("object_1").SHOULD_BE("Textcontent object_1")
   })
 
   it("T2 Test_TextArea_Clear", () => {
     cy.visit("http://test.openkeyword.de/Textarea/textarea_HT.htm")
-    cy.OBJ("object_1").focus().clear()
-    cy.OBJ("object_1").SHOULD_BE('')
+    cy.OBJ("object_1").clear()
+    cy.OBJ("object_1").should('attr.text', '')
   })
 
   it("T3 Test_TextArea_Placeholder", () => {
@@ -46,12 +46,12 @@ describe("TextArea", () => {
 
   it("T9 Test_TextArea_Label", () => {
     cy.visit("http://test.openkeyword.de/Textarea/textarea_HT.htm")
-    cy.OBJ("object_1").SHOULD_BE("Label Object 1")
+    cy.OBJ("object_1").SHOULD_BE_LABEL("Label Object 1")
   })
 
   it("T10 Test_TextArea_Label_Abstarkt", () => {
     cy.visit("http://test.openkeyword.de/Textarea/textarea_HT.htm")
-    cy.OBJ("object_1").SHOULD_BE("Label Object 1")
+    cy.OBJ("object_1").SHOULD_BE_LABEL("Label Object 1")
   })
 
   it("T11 Test_TextArea_Focused", () => {
@@ -98,7 +98,7 @@ describe("TextArea", () => {
 
   it("T19 Test_TextArea_Present", () => {
     cy.visit("http://test.openkeyword.de/Textarea/textarea_HT.htm")
-    cy.OBJ("object_1").should('be.visible')
+    cy.OBJ("object_1").should('exist')
   })
 
   it("T20 Test_TextArea_NonPresent", () => {

@@ -4,7 +4,7 @@
 describe("InputTypeCheckbox", () => {
   it("T1 TestTypeInputCB", () => {
     cy.visit("http://test.openkeyword.de/InputCheckbox/InputTypeCheckbox_HT.htm")
-    cy.OBJ("object_1").clear().IS("Object 1")
+    cy.OBJ("object_1").IS("Object 1")
     cy.OBJ("object_1").SHOULD_BE("Object 1")
   })
 
@@ -41,9 +41,9 @@ describe("InputTypeCheckbox", () => {
   it("T8 TestCBFocused", () => {
     cy.visit("http://test.openkeyword.de/InputCheckbox/InputTypeCheckbox_HT.htm")
     cy.OBJ("object_1").click()
-    
+    cy.OBJ("object_1").should('be.checked')
     cy.OBJ("object_1").should('have.focus')
-    
+    cy.OBJ("object_2").should('not.be.checked')
   })
 
   it("T9 TestCBNonFocusd", () => {
@@ -54,7 +54,7 @@ describe("InputTypeCheckbox", () => {
 
   it("T10 TestCBPresent", () => {
     cy.visit("http://test.openkeyword.de/InputCheckbox/InputTypeCheckbox_HT.htm")
-    cy.OBJ("object_1").should('be.visible')
+    cy.OBJ("object_1").should('exist')
   })
 
   it("T11 TestCBNonPresent", () => {
@@ -89,7 +89,7 @@ describe("InputTypeCheckbox", () => {
 
   it("T16 TestTypeInputCB", () => {
     cy.visit("http://test.openkeyword.de/InputCheckbox/InputTypeCheckbox_HT.htm")
-    cy.OBJ("object_1").wait(2500).type(" " + '{enter}')
+    cy.OBJ("object_1").type(" ")
     cy.OBJ("object_1").SHOULD_BE("Object 1")
   })
 
