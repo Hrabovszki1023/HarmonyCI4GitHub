@@ -31,6 +31,6 @@ jobs:
 
       - name: Cypress tests
         uses: ./
-        with:
-          working-directory: examples/install-only
-          install: false
+        #with:
+        #  working-directory: examples/install-only
+        #  install: false
