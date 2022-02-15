@@ -2,7 +2,7 @@ name: example-install-only
 on:
   push:
     branches:    
-      - 'master'
+      - 'main'
   pull_request:
 jobs:
   # do not install every dependency in this example
@@ -10,7 +10,7 @@ jobs:
   install-cypress-only:
     runs-on: ubuntu-20.04
     steps:
-      - name: Checkout
+      - name: Checkout 🛎
         uses: actions/checkout@v2
 
       # cache NPM modules and Cypress binary folder
@@ -29,14 +29,15 @@ jobs:
       - name: Install Cypress
         run: npm i cypress
 
-      - name: Cypress tests
-        uses: ./
+      # because of "record" and "parallel" parameters
+      # these containers will load balance all found tests among themselves
+      - name: run tests
+        uses: cypress-io/github-action@v2
+        timeout-minutes: 10
         with:
-          working-directory: examples/install-only
-          install: false
+          record: true
         env:
           # pass the Dashboard record key as an environment variable
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           # pass GitHub token to allow accurately detecting a build vs a re-run build
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
