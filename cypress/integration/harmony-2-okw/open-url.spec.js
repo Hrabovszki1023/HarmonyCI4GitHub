@@ -7,7 +7,7 @@ describe("OpenURL", () => {
   })
 
   it("T2 Site [DisableCheckboxSite]", () => {
-    cy.visit("DisableCheckboxSite")
+    cy.visit("http://test.openkeyword.de/InputCheckbox/InputTypeCheckbox_HT.htm")
   })
 
   it("T3 Site [InputTypeText]", () => {
