@@ -1,4 +1,4 @@
-name: example-install-only
+name: main
 on:
   push:
     branches:    
