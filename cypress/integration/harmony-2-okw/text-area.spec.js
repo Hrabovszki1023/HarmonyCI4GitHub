@@ -4,8 +4,8 @@
 describe("TextArea", () => {
   it("T1 Test_TextArea", () => {
     cy.visit("http://test.openkeyword.de/Textarea/textarea_HT.htm")
-    cy.OBJ("object_1").clear().IS("Object 1")
-    cy.OBJ("object_1").SHOULD_BE("Object 1")
+    cy.OBJ("object_1").clear().IS("Textcontent object_1")
+    cy.OBJ("object_1").SHOULD_BE("Textcontent object_1")
   })
 
   it("T2 Test_TextArea_Clear", () => {

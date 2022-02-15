@@ -1002,7 +1002,7 @@ features:
     documentation: ''
     categories: |-
       object_1 (IO): 
-              Choice ("Object 1"); Choice 2;
+              Choice ("Textcontent object_1"); Choice 2;
 
               #focused;
               #non-focused;
